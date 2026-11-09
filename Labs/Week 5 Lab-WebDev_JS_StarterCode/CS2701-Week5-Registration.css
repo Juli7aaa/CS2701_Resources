@@ -2,7 +2,9 @@ body{
     font-family: "Lato", sans-serif;
     max-width: 75rem;
     margin: auto;
-    height: 100vh;
+    /* Accessibility fix (WCAG 1.4.4): min-height instead of a fixed height,
+       so content is not cut off when text is enlarged or zoomed */
+    min-height: 100vh;
 }
 
 header{
@@ -44,6 +46,14 @@ ul.navlist li a {
 
 ul.navlist li a:hover {
     background-color: #111;
+}
+
+/* Accessibility fix (WCAG 2.4.7 Focus Visible): clear outline on menu links
+   for keyboard users. Yellow stands out on the dark menu (WCAG 1.4.11) */
+ul.navlist li a:focus-visible {
+    background-color: #111;
+    outline: 3px solid #ffbf47;
+    outline-offset: -3px;
 }
 
 /**** Styling for main part */
@@ -97,6 +107,15 @@ section {
     text-align: left;
 }
 
+/* Accessibility fix (WCAG 2.4.7 Focus Visible): clear outline on form
+   inputs, buttons and links. Blue stands out on the white form (WCAG 1.4.11) */
+input:focus-visible,
+button:focus-visible,
+form a:focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+}
+
 /*Styling with a media query*/
 @media screen and (max-width: 700px) {
     main{
@@ -105,6 +124,19 @@ section {
     
     aside {
         min-width: 100%;
+    }
+
+    /* Accessibility fix (WCAG 1.4.10 Reflow): remove the 350px minimum
+       so the page fits a 320px-wide phone screen without sideways scrolling */
+    section {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    /* Let the form box use the full width on small screens */
+    .center {
+        width: auto;
     }
 
     #hiddenSection{
