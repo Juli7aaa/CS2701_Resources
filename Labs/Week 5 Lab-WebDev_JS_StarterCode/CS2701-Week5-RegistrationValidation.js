@@ -35,13 +35,46 @@ function readForm(){
 function validateForm() {
     formValid = false;
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-// Validate that all required fields are filled
 
-// Verify that the email address is in a valid format
+    // Validate that all required fields are filled
+    if (formData.username === "" || formData.email === "" ||
+        formData.password === "" || repPassword === "") {
+        alert("Please fill in all the required fields.");
+        return;
+    }
 
-// Perform password strength and matching checks
+    // Verify that the email address is in a valid format
+    if (!mailformat.test(formData.email)) {
+        alert("You have entered an invalid email address!");
+        return;
+    }
 
-// Validate that the required checkboxes are selected
+    // Perform password strength and matching checks
+    if (formData.password.length < 8) {
+        alert("Your password must be at least 8 characters long.");
+        return;
+    }
+    if (!/[0-9]/.test(formData.password) || !/[A-Za-z]/.test(formData.password)) {
+        alert("Your password must contain at least one letter and one number.");
+        return;
+    }
+    if (formData.password !== repPassword) {
+        alert("Your passwords do not match.");
+        return;
+    }
+
+    // Validate that the required checkboxes are selected
+    if (!formData.buyer && !formData.seller) {
+        alert("Please choose if you want to buy, sell, or both.");
+        return;
+    }
+    if (!tosCheckBox) {
+        alert("You must agree to the Terms of Service.");
+        return;
+    }
+
+    // If every check passes, the form is valid
+    formValid = true;
 }
 
 //Function to write the Registration success on the page
@@ -61,7 +94,7 @@ function createNewParagraph(content){
 //on click
 function submitForm(){
     readForm();
-// call the validation function
+    validateForm();
     if (formValid){
         var formText = formData.username +" registered as:\n";
         formText += formData.buyer?"buyer\n":"";
